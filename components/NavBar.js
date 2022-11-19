@@ -1,22 +1,10 @@
 import React from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Ionicons";
+import User from "./User";
 const NavBar = ({ navigation, main }) => {
-  return (
-    <SafeAreaView>
-      {main ? (
-        <View style={styles.container}>
-          <Image style={styles.logo} source={require("../assets/logo.png")} />
-          <TouchableOpacity>
-            <Icon name={"search-outline"} size={30} color={"#fff"} />
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <View></View>
-      )}
-    </SafeAreaView>
-  );
+  return <SafeAreaView>{main ? <User /> : <View></View>}</SafeAreaView>;
 };
 const styles = StyleSheet.create({
   container: {
@@ -26,7 +14,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingLeft: 20,
     paddingRight: 20,
-    backgroundColor: "#000814",
+    backgroundColor: "#22333b",
   },
   logo: {
     width: 130,
