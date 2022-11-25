@@ -8,9 +8,9 @@ import {
   View,
 } from "react-native";
 import items from "../services/DataCategory";
-const Catagories = () => {
+const Catagories = ({ selectedId, setSelectedId }) => {
   const Item = ({ item, onPress, backgroundColor, textColor }) => (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} style={styles.touchable}>
       <View style={[styles.item, backgroundColor]}>
         <View style={styles.viewImage}>
           <Image style={styles.image} source={item.image} />
@@ -19,7 +19,7 @@ const Catagories = () => {
       </View>
     </TouchableOpacity>
   );
-  const [selectedId, setSelectedId] = React.useState(null);
+
   const renderItem = ({ item }) => {
     const backgroundColor = item.id === selectedId ? "#FDC057" : "#FFE1AE";
     const color = item.id === selectedId ? "white" : "#E68338";
@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
   },
   container: {
     marginTop: 10,
-    flex: 1,
 
+    height: 70,
     alignItems: "center",
   },
   image: {
@@ -64,9 +64,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 12,
   },
-  list: {
-    flex: 1,
-  },
+
   item: {
     margin: 10,
     width: 120,

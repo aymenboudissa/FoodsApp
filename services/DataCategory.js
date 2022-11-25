@@ -17,12 +17,12 @@ const items = [
   },
   {
     id: 3,
-    name: "Drings",
+    name: "Drinks",
     image: img3,
   },
   {
     id: 4,
-    name: "Pizza",
+    name: "Pizzas",
     image: img4,
   },
   {

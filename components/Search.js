@@ -8,8 +8,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
-const Search = () => {
-  const [text, setText] = React.useState(null);
+const Search = ({ text, setText }) => {
   return (
     <View style={styles.container}>
       <View>
@@ -30,12 +29,6 @@ const Search = () => {
           <Icon name={"search-outline"} size={30} color={"black"} />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.filter}>
-        <Image
-          style={styles.Iconparametre}
-          source={require("../assets/parametre.png")}
-        />
-      </TouchableOpacity>
     </View>
   );
 };
@@ -53,8 +46,8 @@ const styles = StyleSheet.create({
     height: 30,
   },
   input: {
-    width: 270,
-    height: 40,
+    width: 350,
+    height: 50,
     paddingLeft: 45,
     backgroundColor: "#E9E9E9",
   },
@@ -76,7 +69,7 @@ const styles = StyleSheet.create({
   iconSearch: {
     position: "absolute",
     left: 15,
-    bottom: 5,
+    bottom: 9,
   },
 });
 export default Search;

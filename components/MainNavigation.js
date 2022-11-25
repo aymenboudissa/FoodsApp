@@ -2,6 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "../screens/Home";
 import NavBar from "./NavBar";
+import BottomBar from "../components/BottomBar";
 const Stack = createNativeStackNavigator();
 const MainNavigation = () => {
   return (
@@ -16,6 +17,7 @@ const MainNavigation = () => {
           ),
         }}
       ></Stack.Screen>
+      <Stack.Screen name="BottomBar" component={BottomBar}></Stack.Screen>
     </Stack.Navigator>
   );
 };
