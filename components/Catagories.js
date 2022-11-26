@@ -40,6 +40,7 @@ const Catagories = ({ selectedId, setSelectedId }) => {
         data={items}
         renderItem={renderItem}
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
       />
     </View>
   );

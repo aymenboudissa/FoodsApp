@@ -1,9 +1,11 @@
 import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import Food from "./Food";
-const List = ({ content }) => {
+const List = ({ content, navigattion, categorieID }) => {
   const renderItem = ({ item }) => {
-    return <Food item={item} />;
+    return (
+      <Food item={item} navigation={navigattion} categorieID={categorieID} />
+    );
   };
   return (
     <View style={styles.container}>

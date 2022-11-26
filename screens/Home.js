@@ -1,14 +1,14 @@
 import React from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
 import Catagories from "../components/Catagories";
 import List from "../components/List";
-import Search from "../components/Search";
+import Loading from "../components/Loading";
 import { getBestFood, getCategory, getFoods } from "../services/services";
-const Home = () => {
+import User from "../components/User";
+const Home = ({ navigation }) => {
   const [foods, setFoods] = React.useState();
 
   const [selectedId, setSelectedId] = React.useState(null);
-  const [text, setText] = React.useState(null);
 
   const [loaded, setLoaded] = React.useState(false);
 
@@ -17,16 +17,6 @@ const Home = () => {
       setFoods(null);
       setLoaded(false);
       getCategory(selectedId)
-        .then((food) => {
-          setFoods(food);
-        })
-        .finally(() => {
-          setLoaded(true);
-        });
-    } else if (text) {
-      setFoods(null);
-      setLoaded(false);
-      getFoods(text)
         .then((food) => {
           setFoods(food);
         })
@@ -42,13 +32,13 @@ const Home = () => {
           setLoaded(true);
         });
     }
-  }, [selectedId, text]);
+  }, [selectedId]);
   return (
     <View style={styles.container}>
-      <Search text={text} setText={setText} />
+      <User />
       <Catagories selectedId={selectedId} setSelectedId={setSelectedId} />
-      {!loaded && <ActivityIndicator size={"large"} />}
-      <List content={foods} />
+      {!loaded && <Loading />}
+      <List content={foods} navigattion={navigation} categorieID={selectedId} />
     </View>
   );
 };

@@ -2,9 +2,16 @@ import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 const placeholderImage = require("../assets/image-no-available.png");
 import { Rating } from "react-native-ratings";
-const Food = ({ item }) => {
+const Food = ({ item, navigation, categorieID }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("Detail", {
+          foodID: item.id,
+          categorieID: categorieID,
+        })
+      }
+    >
       <View style={styles.container}>
         <View style={styles.itemImage}>
           <Image style={styles.image} source={{ uri: item.img }} />

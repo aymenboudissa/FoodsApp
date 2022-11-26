@@ -5,7 +5,8 @@ import COLORS from "../consts/colors";
 import { View } from "react-native";
 import HomeScreen from "../screens/Home";
 import CartScreen from "../screens/Cart";
-
+import Detail from "../screens/Detail";
+import Search from "../screens/Search";
 const Tab = createBottomTabNavigator();
 
 const BottomNavigator = () => {
@@ -22,18 +23,28 @@ const BottomNavigator = () => {
       }}
     >
       <Tab.Screen
-        name="HomeScreen"
+        name=" "
         component={HomeScreen}
         options={{
+          headerTransparent: true,
           tabBarIcon: ({ color }) => (
             <Icon name="home-filled" color={color} size={28} />
           ),
         }}
       />
       <Tab.Screen
+        name="Detail"
+        component={Detail}
+        options={{
+          headerTransparent: true,
+          tabBarItemStyle: { display: "none" },
+        }}
+      />
+      <Tab.Screen
         name="LocalMall"
         component={HomeScreen}
         options={{
+          headerTransparent: true,
           tabBarIcon: ({ color }) => (
             <Icon name="local-mall" color={color} size={28} />
           ),
@@ -41,8 +52,9 @@ const BottomNavigator = () => {
       />
       <Tab.Screen
         name="Search"
-        component={HomeScreen}
+        component={Search}
         options={{
+          headerTransparent: true,
           tabBarIcon: ({ color }) => (
             <View
               style={{
@@ -67,6 +79,7 @@ const BottomNavigator = () => {
         name="Favorite"
         component={HomeScreen}
         options={{
+          headerTransparent: true,
           tabBarIcon: ({ color }) => (
             <Icon name="favorite" color={color} size={28} />
           ),
