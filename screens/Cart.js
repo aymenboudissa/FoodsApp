@@ -8,9 +8,11 @@ import {
 } from "react-native";
 import Food from "../components/cart/Food";
 import { getFoodLimit } from "../services/services";
+import Loading from "../components/Loading";
 const Cart = () => {
   const [foods, setfoods] = React.useState([]);
   const [loaded, setLoaded] = React.useState(false);
+
   React.useEffect(() => {
     getFoodLimit()
       .then((food) => {
@@ -20,6 +22,7 @@ const Cart = () => {
         setLoaded(true);
       });
   }, []);
+
   const getFoods = () => {
     let array = [];
     array = foods.map((food) => {
@@ -43,6 +46,7 @@ const Cart = () => {
           </View>
         </TouchableOpacity>
       </View>
+      {!loaded && Loading}
     </ScrollView>
   );
 };

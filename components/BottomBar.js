@@ -25,7 +25,7 @@ const BottomNavigator = () => {
       }}
     >
       <Tab.Screen
-        name=" "
+        name="Home"
         component={HomeScreen}
         options={{
           headerTransparent: true,

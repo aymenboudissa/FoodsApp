@@ -14,7 +14,7 @@ import Loading from "../components/Loading";
 const Search = ({ navigation }) => {
   const [text, setText] = React.useState(null);
   const [foods, setFoods] = React.useState();
-  const [loaded, setLoaded] = React.useState(false);
+  const [loaded, setLoaded] = React.useState();
   const onSubmit = (query) => {
     setFoods(null);
     setText(null);
@@ -64,7 +64,7 @@ const Search = ({ navigation }) => {
           <Text>Type something to start searching</Text>
         </View>
       )}
-      {!loaded && <Loading />}
+      {loaded === false && <Loading />}
     </React.Fragment>
   );
 };

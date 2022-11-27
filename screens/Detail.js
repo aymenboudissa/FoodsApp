@@ -24,17 +24,17 @@ const Detail = ({ route }) => {
       });
   }, [foodID]);
 
-  const onSubmit = async () => {
-    setFavoris((favor) => !favor);
+  // const onSubmit = async () => {
+  //   setFavoris((favor) => !favor);
 
-    // const result = await AsyncStorage.getItem("favoris");
-    // if (result !== null) {
-    //   const array = JSON.parse(result);
-    //   setFavorisID(array);
-    // }
-    // const updateFavorisID = [...FavorisID, foodID];
-    // await AsyncStorage.setItem("favorisID", JSON.stringify(updateFavorisID));
-  };
+  //   // const result = await AsyncStorage.getItem("favoris");
+  //   // if (result !== null) {
+  //   //   const array = JSON.parse(result);
+  //   //   setFavorisID(array);
+  //   // }
+  //   // const updateFavorisID = [...FavorisID, foodID];
+  //   // await AsyncStorage.setItem("favorisID", JSON.stringify(updateFavorisID));
+  // };
   return (
     <React.Fragment>
       {loaded && (
@@ -51,7 +51,7 @@ const Detail = ({ route }) => {
           <View style={styles.foodDesc}>
             <View style={styles.foodTitle}>
               <Text style={[styles.colorWhite, styles.title]}>{food.name}</Text>
-              <TouchableOpacity onPress={onSubmit}>
+              <TouchableOpacity onPress={() => setFavoris((prev) => !prev)}>
                 {favoris ? (
                   <Icon name="favorite" style={styles.icon} color={"#FF8938"} />
                 ) : (
