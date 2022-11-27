@@ -7,6 +7,8 @@ import HomeScreen from "../screens/Home";
 import CartScreen from "../screens/Cart";
 import Detail from "../screens/Detail";
 import Search from "../screens/Search";
+import Favoris from "../screens/Favoris";
+import Local from "../screens/Local";
 const Tab = createBottomTabNavigator();
 
 const BottomNavigator = () => {
@@ -41,8 +43,8 @@ const BottomNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="LocalMall"
-        component={HomeScreen}
+        name="Local"
+        component={Local}
         options={{
           headerTransparent: true,
           tabBarIcon: ({ color }) => (
@@ -77,7 +79,7 @@ const BottomNavigator = () => {
       />
       <Tab.Screen
         name="Favorite"
-        component={HomeScreen}
+        component={Favoris}
         options={{
           headerTransparent: true,
           tabBarIcon: ({ color }) => (

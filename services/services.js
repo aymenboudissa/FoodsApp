@@ -15,6 +15,10 @@ export const getFoods = async (food) => {
   const resp = await axios.get(apiUrl + `our-foods?name_like=${food}`);
   return resp.data;
 };
+export const getFoodLimit = async () => {
+  const resp = await axios.get(apiUrl + `best-foods?_limit=4`);
+  return resp.data;
+};
 export const getFood = async (id, categoryID) => {
   if (categoryID) {
     const category = items[categoryID - 1].name.toLowerCase();

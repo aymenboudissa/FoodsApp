@@ -1,20 +1,20 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-const Food = () => {
+const Food = ({ food }) => {
   return (
     <View style={styles.containerFood}>
       <View style={styles.foodDesc}>
         <Image
           style={styles.image}
           source={{
-            uri: "https://goldbelly.imgix.net/uploads/showcase_media_asset/image/133100/legendary-seafood-gumbo.a4010efb8ba0569ff59d68c3723f0963.jpg?ixlib=react-9.0.2&auto=format&ar=1%3A1",
+            uri: food.img,
           }}
         />
         <View>
-          <Text style={styles.titlePriceFood}>Meal Pizza</Text>
-          <Text style={styles.countryFood}>Mixed Pizza</Text>
-          <Text style={styles.titlePriceFood}>$8.30</Text>
+          <Text style={[styles.titlePriceFood, styles.title]}>{food.name}</Text>
+          <Text style={styles.countryFood}>{food.cuntry}</Text>
+          <Text style={styles.titlePriceFood}>${food.price}</Text>
         </View>
       </View>
       <View style={styles.Qte}>
@@ -52,6 +52,9 @@ const styles = StyleSheet.create({
     borderWidth: 0.1,
     borderRadius: 10,
     elevation: 2,
+  },
+  title: {
+    width: 100,
   },
   foodDesc: {
     display: "flex",

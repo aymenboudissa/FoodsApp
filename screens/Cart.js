@@ -1,3 +1,4 @@
+import React from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -6,14 +7,30 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Food from "../components/cart/Food";
+import { getFoodLimit } from "../services/services";
 const Cart = () => {
+  const [foods, setfoods] = React.useState([]);
+  const [loaded, setLoaded] = React.useState(false);
+  React.useEffect(() => {
+    getFoodLimit()
+      .then((food) => {
+        setfoods(food);
+      })
+      .finally(() => {
+        setLoaded(true);
+      });
+  }, []);
+  const getFoods = () => {
+    let array = [];
+    array = foods.map((food) => {
+      return <Food food={food} />;
+    });
+    return array;
+  };
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Food />
-        <Food />
-        <Food />
-        <Food />
+        {foods && foods.length > 0 && getFoods()}
         <View style={styles.totale}>
           <Text style={styles.fontBold}>Totale Price</Text>
           <Text style={styles.priceFood}>$50</Text>

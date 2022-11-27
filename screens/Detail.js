@@ -2,6 +2,8 @@ import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { getFood } from "../services/services";
 import Icon from "react-native-vector-icons/MaterialIcons";
+// import { useFoods } from "../contexts/FoodProvider";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const Detail = ({ route }) => {
   const [food, setFood] = React.useState();
   const [loaded, setLoaded] = React.useState(false);
@@ -9,6 +11,7 @@ const Detail = ({ route }) => {
   const foodID = route.params.foodID;
   const [favoris, setFavoris] = React.useState(false);
   const categorieID = route.params.categorieID;
+  const { FavorisID, setFavorisID } = React.useState();
   React.useEffect(() => {
     setFood({});
     setFavoris(false);
@@ -21,8 +24,17 @@ const Detail = ({ route }) => {
       });
   }, [foodID]);
 
-  const backgroundColor = favoris == true ? "#FF8938" : "white";
+  const onSubmit = async () => {
+    setFavoris((favor) => !favor);
 
+    // const result = await AsyncStorage.getItem("favoris");
+    // if (result !== null) {
+    //   const array = JSON.parse(result);
+    //   setFavorisID(array);
+    // }
+    // const updateFavorisID = [...FavorisID, foodID];
+    // await AsyncStorage.setItem("favorisID", JSON.stringify(updateFavorisID));
+  };
   return (
     <React.Fragment>
       {loaded && (
@@ -39,7 +51,7 @@ const Detail = ({ route }) => {
           <View style={styles.foodDesc}>
             <View style={styles.foodTitle}>
               <Text style={[styles.colorWhite, styles.title]}>{food.name}</Text>
-              <TouchableOpacity onPress={() => setFavoris((favor) => !favor)}>
+              <TouchableOpacity onPress={onSubmit}>
                 {favoris ? (
                   <Icon name="favorite" style={styles.icon} color={"#FF8938"} />
                 ) : (
