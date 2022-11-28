@@ -12,6 +12,7 @@ import Icon1 from "react-native-vector-icons/Feather";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ButtonOrange from "../ButtonOrange";
 import COLORS from "../../consts/colors";
+import ButtonGoogle from "../ButtonGoogle";
 const SignUp = ({ navigation }) => {
   const [userEmail, setUserEmail] = React.useState("");
   const [userName, setUserName] = React.useState("");
@@ -133,19 +134,7 @@ const SignUp = ({ navigation }) => {
           <Text style={styles.sign}>Sign In</Text>
         </TouchableOpacity>
       </View>
-      <View style={[styles.btnDisplay, { marginTop: 10 }]}>
-        <TouchableOpacity>
-          <View style={[styles.btnCheckOut, { backgroundColor: "#ECECEC" }]}>
-            <Image
-              style={styles.iconGoogle}
-              source={require("../../assets/logo-google.png")}
-            />
-            <Text style={[{ fontSize: 16 }, { fontWeight: "400" }]}>
-              Continue With Google
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <ButtonGoogle navigation={navigation} />
     </View>
   );
 };
