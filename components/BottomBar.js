@@ -23,6 +23,7 @@ const BottomNavigator = () => {
         showLabel: false,
         activeTintColor: COLORS.primary,
       }}
+      screenOptions={{ headerShown: false }}
     >
       <Tab.Screen
         name="Home"
