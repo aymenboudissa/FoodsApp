@@ -13,6 +13,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import ButtonOrange from "../ButtonOrange";
 import COLORS from "../../consts/colors";
 import ButtonGoogle from "../ButtonGoogle";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import ToastManager, { Toast } from "toastify-react-native";
+import { auth } from "../../config";
 const Login = ({ navigation }) => {
   const [userEmail, setUserEmail] = React.useState("");
   const [userPassword, setUserPassword] = React.useState("");
@@ -31,8 +34,19 @@ const Login = ({ navigation }) => {
 
   const color = invalid ? "red" : "";
   const Display = invalid ? "block" : "none";
+  const LongIn = async () => {
+    await signInWithEmailAndPassword(auth, userEmail, userPassword)
+      .then(() => {
+        Toast.success("You are sign In !");
+      })
+      .catch((erro) => {
+        Toast.error("Something went wrong");
+      });
+  };
+
   return (
     <View style={styles.container}>
+      <ToastManager />
       <View style={[styles.headerText, styles.DisplayColumn]}>
         <Text style={styles.fontBold}>Let's Sign You In</Text>
         <Text style={styles.textMuet}>Welcome back,you've been missed</Text>
@@ -88,8 +102,17 @@ const Login = ({ navigation }) => {
         )}
       </View>
       <View style={styles.btnDisplay}>
-        <TouchableOpacity>
-          <View style={styles.btnCheckOut}>
+        <TouchableOpacity
+          onPress={invalid ? () => setInvalid(true) : () => LongIn()}
+        >
+          <View
+            style={[
+              styles.btnCheckOut,
+              invalid
+                ? { backgroundColor: COLORS.primaryClaire }
+                : { backgroundColor: COLORS.primary },
+            ]}
+          >
             <Text style={styles.btn}>Sign In</Text>
           </View>
         </TouchableOpacity>

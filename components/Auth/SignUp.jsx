@@ -13,12 +13,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import ButtonOrange from "../ButtonOrange";
 import COLORS from "../../consts/colors";
 import ButtonGoogle from "../ButtonGoogle";
+import { auth, db } from "../../config";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+
+import ToastManager, { Toast } from "toastify-react-native";
 const SignUp = ({ navigation }) => {
   const [userEmail, setUserEmail] = React.useState("");
   const [userName, setUserName] = React.useState("");
   const [userPassword, setUserPassword] = React.useState("");
   const [invalidEmail, setInvalidEmail] = React.useState(null);
-  const [invalidName, setInvalidName] = React.useState(false);
+
+  const [invalidPassword, setInvalidPassword] = React.useState(false);
   const [hide, setHide] = React.useState(true);
 
   React.useEffect(() => {
@@ -29,17 +34,51 @@ const SignUp = ({ navigation }) => {
         setInvalidEmail(false);
       }
     }
-    if (userName) {
-      setInvalidName(true);
-    } else {
-      setInvalidName(false);
-    }
-  }, [userEmail, userName]);
 
+    if (userPassword) {
+      if (userPassword.length < 9) {
+        setInvalidPassword(true);
+      } else {
+        setInvalidPassword(false);
+      }
+    }
+  }, [userEmail, userName, userPassword]);
+  const CreateUser = async () => {
+    await createUserWithEmailAndPassword(auth, userEmail, userPassword)
+      .then(() => {
+        Toast.success("User account created & signed in!");
+        setTimeout(() => {
+          navigation.navigate("HomeBottom");
+        }, 2000);
+      })
+      .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          Toast.warn("That email address is already in use!");
+        }
+
+        if (error.code === "auth/invalid-email") {
+          Toast.error("That email address is invalid!");
+        }
+      });
+    // updateProfile(auth.currentUser, {
+    //   displayName: userName,
+    // });
+    // const user = userCredential.user;
+    // const formDataCopy = {
+    //   displayName: userName,
+    //   email: userEmail,
+    //   password: userPassword,
+    // };
+    // delete formDataCopy.password;
+    // formDataCopy.timestamp = serverTimestamp();
+    // await setDoc(doc(db, "users", user.uid), formDataCopy);
+  };
   const color = invalidEmail ? "red" : "";
   const Display = invalidEmail ? "block" : "none";
+
   return (
     <View style={styles.container}>
+      <ToastManager />
       <View style={[styles.headerText, styles.DisplayColumn]}>
         <Text style={styles.fontBold}>Getting Started</Text>
         <Text style={styles.textMuet}>Create an account to continue!</Text>
@@ -73,10 +112,10 @@ const SignUp = ({ navigation }) => {
           <Icon name="closecircleo" style={[styles.icon, { color: "red" }]} />
         )}
       </View>
-      {/* starte input of user name */}
+      {/* starte input of name */}
       <View style={[styles.DisplayColumn, styles.ContentInput]}>
         <View style={styles.HeaderInput}>
-          <Text style={[styles.label, styles.textMuet]}>Username</Text>
+          <Text style={[styles.label, styles.textMuet]}>Name</Text>
         </View>
         <TextInput
           style={styles.input}
@@ -84,19 +123,20 @@ const SignUp = ({ navigation }) => {
           value={userName}
         />
 
-        {!invalidName ? (
-          <Icon name="checkcircleo" style={styles.icon} />
-        ) : (
-          <Icon
-            name="checkcircleo"
-            style={[styles.icon, { color: "green", fontWeight: "bold" }]}
-          />
-        )}
+        <Icon name="checkcircleo" style={styles.icon} />
       </View>
+
       {/* starte input of password */}
       <View style={[styles.DisplayColumn, styles.ContentInput]}>
         <View style={styles.HeaderInput}>
           <Text style={[styles.label, styles.textMuet]}>Password</Text>
+          <Text
+            style={[
+              invalidPassword ? styles.invalidEmail : { display: "none" },
+            ]}
+          >
+            Password must be 9 characters
+          </Text>
         </View>
         <TextInput
           style={styles.input}
@@ -122,8 +162,21 @@ const SignUp = ({ navigation }) => {
         )}
       </View>
       <View style={styles.btnDisplay}>
-        <TouchableOpacity>
-          <View style={styles.btnCheckOut}>
+        <TouchableOpacity
+          onPress={
+            !invalidEmail && invalidPassword
+              ? () => setInvalidEmail(true)
+              : CreateUser
+          }
+        >
+          <View
+            style={[
+              styles.btnCheckOut,
+              !invalidEmail && invalidPassword
+                ? { backgroundColor: COLORS.primaryClaire }
+                : { backgroundColor: COLORS.primary },
+            ]}
+          >
             <Text style={styles.btn}>Sign Up</Text>
           </View>
         </TouchableOpacity>
@@ -202,7 +255,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: COLORS.primary,
+
     height: 50,
     width: 300,
     margin: 10,

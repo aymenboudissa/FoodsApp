@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { getFood } from "../services/services";
 import Icon from "react-native-vector-icons/MaterialIcons";
 // import { useFoods } from "../contexts/FoodProvider";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 const Detail = ({ route }) => {
   const [food, setFood] = React.useState();
   const [loaded, setLoaded] = React.useState(false);

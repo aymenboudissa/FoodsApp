@@ -9,13 +9,16 @@ import COLORS from "./consts/colors";
 import Login from "./components/Auth/Login";
 import Home from "./screens/Home";
 import SignUp from "./components/Auth/SignUp";
+
+import PrivateRoot from "./components/PrivateRoot";
+
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
       <StatusBar backgroundColor={COLORS.white} barStyle="dark-content" />
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="BoardScreen" component={OnBoardScreen} />
+        <Stack.Screen name="BoardScreen" component={PrivateRoot} />
         <Stack.Screen name="HomeBottom" component={BottomNavigator} />
         <Stack.Screen name="Detail" component={Detail} />
         <Stack.Screen name="Login" component={Login} />

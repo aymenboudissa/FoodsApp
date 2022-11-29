@@ -24,6 +24,8 @@ const styles = StyleSheet.create({
 
     // paddingTop: 20,
     flex: 1,
+    flexGrow: 1,
+    zIndex: 20,
   },
   list: {
     padding: 5,
