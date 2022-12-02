@@ -7,7 +7,7 @@ import BottomNavigator from "./components/BottomBar";
 import Detail from "./screens/Detail";
 import COLORS from "./consts/colors";
 import Login from "./components/Auth/Login";
-import Home from "./screens/Home";
+
 import SignUp from "./components/Auth/SignUp";
 
 import PrivateRoot from "./components/PrivateRoot";

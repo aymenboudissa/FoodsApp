@@ -17,6 +17,13 @@ import { auth, db } from "../../config";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 import ToastManager, { Toast } from "toastify-react-native";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 const SignUp = ({ navigation }) => {
   const [userEmail, setUserEmail] = React.useState("");
   const [userName, setUserName] = React.useState("");
@@ -44,12 +51,14 @@ const SignUp = ({ navigation }) => {
     }
   }, [userEmail, userName, userPassword]);
   const CreateUser = async () => {
-    await createUserWithEmailAndPassword(auth, userEmail, userPassword)
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      userEmail,
+      userPassword
+    )
       .then(() => {
+        navigation.navigate("HomeBottom");
         Toast.success("User account created & signed in!");
-        setTimeout(() => {
-          navigation.navigate("HomeBottom");
-        }, 2000);
       })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {
@@ -60,18 +69,18 @@ const SignUp = ({ navigation }) => {
           Toast.error("That email address is invalid!");
         }
       });
-    // updateProfile(auth.currentUser, {
-    //   displayName: userName,
-    // });
-    // const user = userCredential.user;
-    // const formDataCopy = {
-    //   displayName: userName,
-    //   email: userEmail,
-    //   password: userPassword,
-    // };
-    // delete formDataCopy.password;
-    // formDataCopy.timestamp = serverTimestamp();
-    // await setDoc(doc(db, "users", user.uid), formDataCopy);
+    updateProfile(auth.currentUser, {
+      displayName: userName,
+    });
+    const user = userCredential.user;
+    const formDataCopy = {
+      displayName: userName,
+      email: userEmail,
+      password: userPassword,
+    };
+    delete formDataCopy.password;
+    formDataCopy.timestamp = serverTimestamp();
+    await setDoc(doc(db, "users", user.uid), formDataCopy);
   };
   const color = invalidEmail ? "red" : "";
   const Display = invalidEmail ? "block" : "none";

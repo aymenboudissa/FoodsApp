@@ -8,19 +8,23 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Catagories from "../components/Catagories";
-import List from "../components/List";
-import Loading from "../components/Loading";
-import { getBestFood, getCategory, getFoods } from "../services/services";
-import User from "../components/User";
-import { useAuth } from "../components/Auth/useAuth";
-import SideBar from "../components/SideBar";
+import Catagories from "../../components/Catagories";
+import List from "../../components/List";
+import Loading from "../../components/Loading";
+import { getBestFood, getCategory, getFoods } from "../../services/services";
+import User from "../../components/User";
+import { useAuth } from "../../components/Auth/useAuth";
+import SideBar from "../../components/SideBar";
 import ToastManager, { Toast } from "toastify-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { auth } from "../../config";
+import { getAuth } from "firebase/auth";
+import Icon from "react-native-vector-icons/Fontisto";
+import COLORS from "../../consts/colors";
+import FilterModal from "./FilterModal";
 const Home = ({ navigation }) => {
   const [foods, setFoods] = React.useState();
-  const user = useAuth();
-
+  const [showFilterMode, setShowFilterMode] = React.useState();
   const [selectedId, setSelectedId] = React.useState(null);
   const [showMen, setShowMenu] = React.useState(false);
   const [loaded, setLoaded] = React.useState(false);
@@ -92,18 +96,28 @@ const Home = ({ navigation }) => {
             >
               <Image
                 style={styles.image}
-                source={require("../assets/user.jpg")}
+                source={require("../../assets/user.jpg")}
               />
             </TouchableOpacity>
             <View>
-              <Text style={styles.text1}>{user && user.email}</Text>
+              <Text style={styles.text1}>{auth.currentUser.email}</Text>
               <Text style={styles.text2}>What do you want today</Text>
             </View>
           </View>
-
           <Catagories selectedId={selectedId} setSelectedId={setSelectedId} />
+          {/* FIlter Button */}
+          <TouchableOpacity onPress={() => setShowFilterMode(true)}>
+            <View style={styles.buttonFilter}>
+              <Icon color={"#4F4F4F"} name="filter" size={16} />
+            </View>
+          </TouchableOpacity>
+          {showFilterMode && (
+            <FilterModal
+              isVisible={showFilterMode}
+              onClose={() => setShowFilterMode(false)}
+            />
+          )}
           {!loaded && <Loading />}
-
           <List
             content={foods}
             navigattion={navigation}
@@ -158,6 +172,18 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     marginRight: 10,
+  },
+  buttonFilter: {
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#E2E2E2",
+    width: 50,
+    marginLeft: 10,
+    marginBottom: 10,
+    borderRadius: 5,
   },
 });
 export default Home;

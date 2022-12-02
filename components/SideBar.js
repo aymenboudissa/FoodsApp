@@ -22,12 +22,7 @@ const SideBar = ({ navigation }) => {
     // () => setActive(text);
     return (
       <SafeAreaView>
-        <TouchableOpacity
-          onPress={() => {
-            fonction;
-            setActive(text);
-          }}
-        >
+        <TouchableOpacity onPress={fonction}>
           <View
             style={[
               styles.ButtonStyle,
