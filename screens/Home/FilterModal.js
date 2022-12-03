@@ -41,12 +41,12 @@ const FilterModal = ({ isVisible, onClose }) => {
       </TouchableOpacity>
     );
   };
-  const renderTag = ({ item }) => {
+  const renderTag = (item) => {
     const backgroundColorTag =
       item.id == selectedTag ? COLORS.primary : "#E2E2E2";
     const color = item.id == selectedTag ? COLORS.white : "#4F4F4F";
     return (
-      <TouchableOpacity onPress={() => setSelectedTag(item.id)}>
+      <TouchableOpacity onPress={() => setSelectedTag(item.id)} key={item.id}>
         <View
           style={{
             backgroundColor: backgroundColorTag,
@@ -204,12 +204,13 @@ const FilterModal = ({ isVisible, onClose }) => {
           </View>
           <View style={{ marginTop: 40 }}>
             <Text style={{ fontWeight: "bold" }}>Tags</Text>
-            <FlatList
-              style={{ marginTop: 10 }}
-              data={items}
-              renderItem={renderTag}
-              numColumns={3}
-            />
+            <View
+              style={{ marginTop: 10, flexDirection: "row", flexWrap: "wrap" }}
+            >
+              {items.map((item) => {
+                return renderTag(item);
+              })}
+            </View>
           </View>
           <TouchableOpacity
             onPress={applyFilter}

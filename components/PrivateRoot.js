@@ -5,7 +5,7 @@ import Login from "./Auth/Login";
 const PrivateRoot = ({ navigation }) => {
   const user = useAuth();
 
-  return user ? <BottomBar /> : <Login />;
+  return user ? <BottomBar /> : <Login navigation={navigation} />;
 };
 
 export default PrivateRoot;

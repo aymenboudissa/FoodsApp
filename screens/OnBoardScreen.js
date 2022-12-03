@@ -39,7 +39,7 @@ const OnBoardScreen = ({ navigation }) => {
           <View style={style.indicator} />
         </View>
         <View style={style.btnDisplay}>
-          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+          <TouchableOpacity onPress={() => navigation.navigate("BoardScreen")}>
             <View style={style.btnCheckOut}>
               <Text style={style.btn}>GET STARTED</Text>
             </View>

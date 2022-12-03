@@ -18,6 +18,7 @@ export default function App() {
     <NavigationContainer>
       <StatusBar backgroundColor={COLORS.white} barStyle="dark-content" />
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="OnBoardScreen" component={OnBoardScreen} />
         <Stack.Screen name="BoardScreen" component={PrivateRoot} />
         <Stack.Screen name="HomeBottom" component={BottomNavigator} />
         <Stack.Screen name="Detail" component={Detail} />

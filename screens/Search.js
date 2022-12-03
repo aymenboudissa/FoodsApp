@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   container: {
     // marginTop: 90,
     padding: 0,
-    paddingTop: 60,
+    paddingTop: 20,
     marginTop: 20,
     flexDirection: "row",
     justifyContent: "space-between",
