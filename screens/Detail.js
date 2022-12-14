@@ -1,7 +1,18 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { getFood } from "../services/services";
+import { getProductByID } from "../services/services";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { auth, db } from "../config";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 // import { useFoods } from "../contexts/FoodProvider";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 const Detail = ({ route }) => {
@@ -10,31 +21,64 @@ const Detail = ({ route }) => {
 
   const foodID = route.params.foodID;
   const [favoris, setFavoris] = React.useState(false);
-  const categorieID = route.params.categorieID;
+  const [cart, setCart] = React.useState(false);
+
   const { FavorisID, setFavorisID } = React.useState();
+  const { ref, setRef } = React.useState();
   React.useEffect(() => {
     setFood({});
     setFavoris(false);
-    getFood(foodID, categorieID)
+    getProductByID(foodID)
       .then((food) => {
-        setFood(food);
+        setFood(food[0]);
       })
       .finally(() => {
         setLoaded(true);
       });
   }, [foodID]);
+  const getValueRandom = () => {
+    const index = Math.floor(Math.random() * 400);
+    return index;
+  };
+  const addToFirebase = async (table, state, setState) => {
+    setState((favor) => !favor);
 
-  // const onSubmit = async () => {
-  //   setFavoris((favor) => !favor);
+    if (!state) {
+      const formDataCopy =
+        table === "listingsFavoris"
+          ? {
+              idMeal: foodID,
+              title: food.strMeal,
+              image: food.strMealThumb,
+              price: getValueRandom(),
+              category: food.strCategory,
 
-  //   // const result = await AsyncStorage.getItem("favoris");
-  //   // if (result !== null) {
-  //   //   const array = JSON.parse(result);
-  //   //   setFavorisID(array);
-  //   // }
-  //   // const updateFavorisID = [...FavorisID, foodID];
-  //   // await AsyncStorage.setItem("favorisID", JSON.stringify(updateFavorisID));
-  // };
+              useRef: auth.currentUser.uid,
+            }
+          : {
+              idMeal: foodID,
+              title: food.strMeal,
+              image: food.strMealThumb,
+              price: getValueRandom(),
+              category: food.strCategory,
+              qte: 1,
+              useRef: auth.currentUser.uid,
+            };
+      await addDoc(collection(db, table), formDataCopy);
+    } else {
+      const listingRef = collection(db, table);
+      const q = query(
+        listingRef,
+        where("useRef", "==", auth.currentUser.uid),
+        where("idMeal", "==", foodID)
+      );
+      const querySnap = await getDocs(q);
+      querySnap.forEach((doca) => {
+        return deleteDoc(doc(db, table, doca.id));
+      });
+    }
+  };
+
   return (
     <React.Fragment>
       {loaded && (
@@ -43,15 +87,21 @@ const Detail = ({ route }) => {
             <Image
               style={styles.imageFood}
               source={{
-                uri: food.img,
+                uri: food.strMealThumb,
               }}
             />
           </View>
 
           <View style={styles.foodDesc}>
             <View style={styles.foodTitle}>
-              <Text style={[styles.colorWhite, styles.title]}>{food.name}</Text>
-              <TouchableOpacity onPress={() => setFavoris((prev) => !prev)}>
+              <Text style={[styles.colorWhite, styles.title]}>
+                {food.strMeal}
+              </Text>
+              <TouchableOpacity
+                onPress={() =>
+                  addToFirebase("listingsFavoris", favoris, setFavoris)
+                }
+              >
                 {favoris ? (
                   <Icon name="favorite" style={styles.icon} color={"#FF8938"} />
                 ) : (
@@ -70,7 +120,10 @@ const Detail = ({ route }) => {
               qu'il est prêt ou que la mise en page est achevée. Généralement,
               on utilise un texte en faux latin, le Lorem ipsum ou Lipsum{" "}
             </Text>
-            <TouchableOpacity style={styles.btnCart}>
+            <TouchableOpacity
+              style={styles.btnCart}
+              onPress={() => addToFirebase("listingsCart", cart, setCart)}
+            >
               <Text style={styles.colorYellow}>Add To Cart</Text>
             </TouchableOpacity>
           </View>

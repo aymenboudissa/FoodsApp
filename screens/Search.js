@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { getFoods } from "../services/services";
+import { getSearchByName } from "../services/services";
 import Icon from "react-native-vector-icons/Ionicons";
 import List from "../components/List";
 import Loading from "../components/Loading";
@@ -19,7 +19,7 @@ const Search = ({ navigation }) => {
     setFoods(null);
     setText(null);
     setLoaded(false);
-    getFoods(text)
+    getSearchByName(text)
       .then((food) => {
         setFoods(food);
       })

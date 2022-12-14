@@ -1,32 +1,33 @@
 import axios from "axios";
-import items from "./DataCategory";
+export const getCategories = async () => {
+  const resp = await axios.get(
+    "https://www.themealdb.com/api/json/v1/1/categories.php"
+  );
+  return resp.data.categories;
+};
+export const getProducts = async () => {
+  const resp = await axios.get(
+    "https://www.themealdb.com/api/json/v1/1/search.php?f=b"
+  );
+  return resp.data.meals;
+};
 
-const apiUrl = "https://ig-food-menus.herokuapp.com/";
-export const getBestFood = async () => {
-  const resp = await axios.get(apiUrl + "best-foods");
-  return resp.data;
+export const getProductsByCategory = async (category) => {
+  const resp = await axios.get(
+    "https://www.themealdb.com/api/json/v1/1/filter.php?c=" + category
+  );
+  return resp.data.meals;
 };
-export const getCategory = async (id) => {
-  const category = items[id - 1].name.toLowerCase();
-  const resp = await axios.get(apiUrl + category);
-  return resp.data;
+
+export const getSearchByName = async (product) => {
+  const resp = await axios.get(
+    "https://www.themealdb.com/api/json/v1/1/search.php?s=" + product
+  );
+  return resp.data.meals;
 };
-export const getFoods = async (food) => {
-  const resp = await axios.get(apiUrl + `our-foods?name_like=${food}`);
-  return resp.data;
-};
-export const getFoodLimit = async () => {
-  const resp = await axios.get(apiUrl + `best-foods?_limit=4`);
-  return resp.data;
-};
-export const getFood = async (id, categoryID) => {
-  if (categoryID) {
-    const category = items[categoryID - 1].name.toLowerCase();
-    const resp = await axios.get(apiUrl + `${category}/${id}`);
-    return resp.data;
-    return resp.data;
-  } else {
-    const resp = await axios.get(apiUrl + `best-foods/${id}`);
-    return resp.data;
-  }
+export const getProductByID = async (id) => {
+  const resp = await axios.get(
+    "https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + id
+  );
+  return resp.data.meals;
 };

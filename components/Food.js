@@ -3,21 +3,24 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 const placeholderImage = require("../assets/image-no-available.png");
 import { Rating } from "react-native-ratings";
 const Food = ({ item, navigation, categorieID }) => {
+  const getValueRandom = () => {
+    const index = Math.floor(Math.random() * 400);
+    return index;
+  };
   return (
     <TouchableOpacity
       onPress={() =>
         navigation.navigate("Detail", {
-          foodID: item.id,
-          categorieID: categorieID,
+          foodID: item.idMeal,
         })
       }
     >
       <View style={styles.container}>
         <View style={styles.itemImage}>
-          <Image style={styles.image} source={{ uri: item.img }} />
+          <Image style={styles.image} source={{ uri: item.strMealThumb }} />
         </View>
         <View style={styles.info}>
-          <Text style={styles.text}>{item.name}</Text>
+          <Text style={styles.text}>{item.strMeal}</Text>
           <Rating
             imageSize={15}
             count={5}
@@ -25,7 +28,7 @@ const Food = ({ item, navigation, categorieID }) => {
             startingValue={item.rate}
             ratingColor={"gold"}
           />
-          <Text style={[styles.text, styles.price]}>${item.price}</Text>
+          <Text style={[styles.text, styles.price]}>${getValueRandom()}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -44,9 +47,6 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     position: "relative",
-    borderColor: "black",
-    borderRadius: 10,
-    borderWidth: 0.5,
     marginRight: 5,
     marginBottom: 20,
     width: 170,
@@ -55,6 +55,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "white",
+    borderColor: "black",
+    borderWidth: 0.1,
+    elevation: 2,
+    borderRadius: 0,
   },
   image: {
     marginTop: 0,

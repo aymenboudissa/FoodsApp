@@ -7,27 +7,27 @@ import img5 from "../assets/categories/sandwich.png";
 const items = [
   {
     id: 1,
-    name: "Burgers",
+    name: "Beef",
     image: img1,
   },
   {
     id: 2,
-    name: "Breads",
+    name: "Chicken",
     image: img2,
   },
   {
     id: 3,
-    name: "Drinks",
+    name: "Dessert",
     image: img3,
   },
   {
     id: 4,
-    name: "Pizzas",
+    name: "Pasta",
     image: img4,
   },
   {
     id: 5,
-    name: "Sandwiches",
+    name: "Vegetarian",
     image: img5,
   },
 ];

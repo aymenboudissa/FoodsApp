@@ -11,7 +11,7 @@ import {
 import Catagories from "../../components/Catagories";
 import List from "../../components/List";
 import Loading from "../../components/Loading";
-import { getBestFood, getCategory, getFoods } from "../../services/services";
+import { getProducts, getProductsByCategory } from "../../services/services";
 import User from "../../components/User";
 import { useAuth } from "../../components/Auth/useAuth";
 import SideBar from "../../components/SideBar";
@@ -36,7 +36,7 @@ const Home = ({ navigation }) => {
     if (selectedId !== null) {
       setFoods(null);
       setLoaded(false);
-      getCategory(selectedId)
+      getProductsByCategory(selectedId)
         .then((food) => {
           setFoods(food);
         })
@@ -44,7 +44,7 @@ const Home = ({ navigation }) => {
           setLoaded(true);
         });
     } else {
-      getBestFood()
+      getProducts()
         .then((best) => {
           setFoods(best);
         })

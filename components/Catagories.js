@@ -21,13 +21,13 @@ const Catagories = ({ selectedId, setSelectedId }) => {
   );
 
   const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#FDC057" : "#FFE1AE";
-    const color = item.id === selectedId ? "white" : "#E68338";
+    const backgroundColor = item.name === selectedId ? "#FDC057" : "#FFE1AE";
+    const color = item.name === selectedId ? "white" : "#E68338";
 
     return (
       <Item
         item={item}
-        onPress={() => setSelectedId(item.id)}
+        onPress={() => setSelectedId(item.name)}
         backgroundColor={{ backgroundColor }}
         textColor={{ color }}
       />
