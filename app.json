@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "FilmsApp",
+    "name": "Films App",
     "slug": "FilmsApp",
     "version": "1.0.0",
 
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/Food-logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/Food-logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
