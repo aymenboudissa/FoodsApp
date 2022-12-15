@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 0.1,
     elevation: 2,
+    backgroundColor: "white",
     // borderRadius: 10,
   },
   foodDesc: {

@@ -11,7 +11,18 @@ import { getFoodLimit } from "../services/services";
 import Loading from "../components/Loading";
 import ButtonOrange from "../components/ButtonOrange";
 import { auth, db } from "../config";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { SwipeListView } from "react-native-swipe-list-view";
+import Icon from "react-native-vector-icons/AntDesign";
+import COLORS from "../consts/colors";
+import { async } from "@firebase/util";
 const Cart = () => {
   const [loaded, setLoaded] = React.useState(false);
   const [totale, setTotale] = React.useState(0);
@@ -22,6 +33,11 @@ const Cart = () => {
       sumMontant += meals.data.qte * meals.data.price;
     });
     return sumMontant;
+  };
+  const deleteFromCart = async (id) => {
+    await deleteDoc(doc(db, "listingsCart", id));
+    const updateList = meals.filter((meal) => meal.id !== id);
+    setMeals(updateList);
   };
   React.useEffect(() => {
     setLoaded(false);
@@ -44,26 +60,57 @@ const Cart = () => {
     setLoaded(true);
   }, [meals]);
 
-  const getFoods = () => {
-    let array = [];
-    array = meals.map((food) => {
-      return <Food food={food} setMeals={setMeals} />;
-    });
-    return array;
+  const getFoods = (item) => {
+    return console.log(item);
   };
 
   return (
-    <ScrollView>
+    <>
       <View style={styles.container}>
-        {meals && meals.length > 0 && getFoods()}
+        {meals && meals.length > 0 && (
+          <SwipeListView
+            data={meals}
+            keyExtractor={(item) => `${item.id}`}
+            contentContainerStyle={{
+              marginTop: 10,
+              paddingHorizontal: 15,
+              paddingBottom: 30,
+            }}
+            disableRightSwipe={true}
+            rightOpenValue={-75}
+            renderItem={(data) => <Food food={data.item} setMeals={setMeals} />}
+            renderHiddenItem={(data) => (
+              <View
+                style={{
+                  display: "flex",
+                  margin: 10,
+                  height: "82%",
+                  justifyContent: "center",
+                  alignItems: "flex-end",
+                  backgroundColor: COLORS.primary,
+                }}
+              >
+                <Icon
+                  name="delete"
+                  style={{ marginRight: 17 }}
+                  color={"white"}
+                  size={40}
+                  onPress={() => deleteFromCart(data.item.id)}
+                />
+              </View>
+            )}
+          />
+        )}
+        {!loaded && <Loading />}
+      </View>
+      <View style={styles.footerCart}>
         <View style={styles.totale}>
           <Text style={styles.fontBold}>Totale Price</Text>
           <Text style={styles.priceFood}>${calculateSumMontant()}</Text>
         </View>
+        <ButtonOrange title={"CHECKOUT"} />
       </View>
-      <ButtonOrange title={"CHECKOUT"} />
-      {!loaded && Loading}
-    </ScrollView>
+    </>
   );
 };
 const styles = StyleSheet.create({
@@ -85,6 +132,14 @@ const styles = StyleSheet.create({
   priceFood: {
     fontWeight: "bold",
     fontSize: 25,
+  },
+  footerCart: {
+    padding: 5,
+    borderColor: "black",
+    borderWidth: 0.1,
+    elevation: 2,
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
   },
 });
 export default Cart;

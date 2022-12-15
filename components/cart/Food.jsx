@@ -3,6 +3,7 @@ import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { db } from "../../config";
+import { SwipeListView } from "react-native-swipe-list-view";
 const Food = ({ food, setMeals }) => {
   const addQte = async (id) => {
     setMeals((meals) => {
@@ -69,9 +70,9 @@ const styles = StyleSheet.create({
     color: "white",
   },
   image: {
-    width: 80,
-    height: 80,
-    marginRight: 20,
+    width: 60,
+    height: 60,
+    marginRight: 10,
     borderRadius: 30,
   },
   containerFood: {
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 15,
-
+    backgroundColor: "white",
     borderColor: "black",
     borderWidth: 0.1,
     elevation: 2,
