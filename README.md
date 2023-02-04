@@ -1,6 +1,7 @@
 # FoodsApp
 ![White and Blue Clean Phone Notification Facebook Story](https://user-images.githubusercontent.com/93468048/216773369-18946e53-b57f-4c8f-b2ba-38cdbc6610b5.png)
-![White and Blue Clean Phone Notification Facebook Story (8)](https://user-images.githubusercontent.com/93468048/216773374-cb9232f1-233f-4933-a986-3c7959a59618.png)
+![page-home](https://user-images.githubusercontent.com/93468048/216773542-21da6536-0856-483a-95a7-ea5d5449586e.png)
+
 ![White and Blue Clean Phone Notification Facebook Story (7)](https://user-images.githubusercontent.com/93468048/216773380-9b33f758-b9cd-4b0b-8582-21c2539ef6fb.png)
 ![White and Blue Clean Phone Notification Facebook Story (6)](https://user-images.githubusercontent.com/93468048/216773384-4284d797-b598-4f7a-bd04-9ec0224fdeb7.png)
 ![White and Blue Clean Phone Notification Facebook Story (5)](https://user-images.githubusercontent.com/93468048/216773391-759e0e88-50cf-48ad-be4e-81b7e1daecf9.png)
